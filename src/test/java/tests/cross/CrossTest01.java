@@ -7,7 +7,11 @@ public class CrossTest01 extends TestBaseCross {
 
     @Test
     public void test01() {
-        driver.get("https://www.amazon.com");
-        driver.get("https://www.facebook.com");
+        extentTest=extentReports.createTest("Deneme Test");
+        driver.get("https://amazon.com");
+        extentTest.info("Amazona Gidildi");
+        driver.get("https://facebook.com");
+        extentTest.info("Facebook'a Gidildi");
+        extentTest.pass("Test Passed");
     }
 }

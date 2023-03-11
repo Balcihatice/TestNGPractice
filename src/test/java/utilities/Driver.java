@@ -3,6 +3,7 @@ package utilities;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 
 import java.time.Duration;
@@ -15,15 +16,20 @@ public class Driver {
     2-Driver'i kapatacağımız zaman da public static void closeDriver() methodu oluşturmak. İstediğimiz zaman
     bu methodla driver'i kapatacağız
      */
+  private Driver(){
 
+  }
     static WebDriver driver;
 
     public static WebDriver getDriver() {
+      //  System.setProperty("webdriver.http.factory", "jdk-http-client");//chrome guncellemsi gelince kullandik-pomda iki adet dependency var
         if (driver == null) {//EĞER DRIVER'A DEĞER ATANMAMIŞSA DEĞER ATA, EĞER DEĞER ATANMIŞŞSA DRİVER'I AYNI SAYFADA RETURN ET
             switch (ConfigReader.getProperty("browser")) {
                 case "chrome":
+                    ChromeOptions co = new ChromeOptions();
+                    co.addArguments("--remote-allow-origins=*");
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
+                    driver = new ChromeDriver(co);
                     break;
                 case "edge":
                     WebDriverManager.edgedriver().setup();
@@ -50,5 +56,4 @@ public class Driver {
             driver = null;
         }
     }
-
 }
